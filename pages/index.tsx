@@ -1,9 +1,10 @@
 import type { NextPage } from 'next'
 import Head from 'next/head'
 import { Fragment, useEffect, useState } from 'react'
-import api from '../api'
+import api, { mqttUrl } from '../api'
 import DeviceCard from '../components/DeviceCard'
 import { Hardware, CollectionResponse } from 'sicon-os-types'
+import mqtt from 'mqtt'
 
 const Home: NextPage = () => {
 	const [devices, setDevices] = useState<Hardware[]>([])
@@ -14,6 +15,20 @@ const Home: NextPage = () => {
 		}
 		getHardware()
 	}, [])
+	useEffect(() => {
+		const client = mqtt.connect(mqttUrl)
+		client.subscribe('device/+/changeProductionStatus')
+		client.on('message', (topic, message) => {
+			const deviceId = parseInt(topic.split('/')[1])
+			setDevices(devices.map(device => ({
+				...device,
+				ProductionStatus: device.ID == deviceId ? JSON.parse(message.toString()) : device.ProductionStatus
+			})))
+		})
+		return () => {
+			client.end()
+		}
+	})
 	return (
 		<Fragment>
 			<Head>

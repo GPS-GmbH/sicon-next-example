@@ -9,7 +9,7 @@ const productionStatusColors = {
 	off: 'bg-gray-400',
 }
 
-const ProductionStatus = ({device}: { device: Hardware }) => {
+const ProductionStatus = ({ device }: { device: Hardware }) => {
 	return <div className={`p-2 ${productionStatusColors[device.ProductionStatus.Status]}`}>
 		{device.ProductionStatus.Status}
 	</div>
