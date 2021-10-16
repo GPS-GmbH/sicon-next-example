@@ -25,9 +25,7 @@ const Home: NextPage = () => {
 				ProductionStatus: device.ID == deviceId ? JSON.parse(message.toString()) : device.ProductionStatus
 			})))
 		})
-		return () => {
-			client.end()
-		}
+		return () => { client.end() }
 	})
 	return (
 		<Fragment>

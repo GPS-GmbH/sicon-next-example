@@ -2,7 +2,7 @@ import { Hardware } from 'sicon-os-types'
 
 const productionStatusColors = {
 	incident: 'bg-red-400',
-	maintenance: 'bg-orange-400',
+	maintenance: 'bg-yellow-600',
 	changeover: 'bg-blue-400',
 	idle: 'bg-yellow-400',
 	producing: 'bg-green-400',
